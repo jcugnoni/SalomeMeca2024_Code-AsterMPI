@@ -138,7 +138,7 @@ Please note that you obviously need Singularity container (or maybe Apptainer, n
 
 For info this was built using Singularity 3.7.0. on Ubuntu 24.04, but this should not matter much as all tools were built using the container's binaries , compilers, libs etc..
 
-# IMPORTANT NOTE / BUG:
+## IMPORTANT NOTE / BUG:
 - when running MPI version from AsterStudy, uncheck "save databases" (yellow icon on the right of the job  activation line , starting with the green +). Failure to do so may let the solver run indefinetelly in the background even if calculation is finished. 
 If someone knows a fix, let me know ;-)
 - The image has been tested on linear static studies up to 1.5MDOFs using MPI PETSC + LDLT_SP and MUMPS solvers up to 20 CPUS. Solvers seem to work well. In case of doubt, run your study with the "stable" or "testing" version to check.
