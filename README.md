@@ -130,17 +130,17 @@ singularity run --app install SalomeMeca2024_custom.sif
 
 ## Download image:
 
-Image resulting from this process can be downloaded from here : 
+Image resulting from this process can be downloaded from the Releases section (here on the right >> )
 
-https://www.caelinux.com/downloads/stable/salome-meca-2024/SalomeMeca2024_custom.sif
-
-MD5Sum: fcea1818fc267d6d8e666f8d3104aa5a 
-Size 8.3Gb
-
-see point 8) above to install and run; 
+See release notes for more details.
 
 Please note that you obviously need Singularity container (or maybe Apptainer, not tried but it should be compatible in principle) 
 
 For info this was built using Singularity 3.7.0. on Ubuntu 24.04, but this should not matter much as all tools were built using the container's binaries , compilers, libs etc..
+
+# IMPORTANT NOTE / BUG:
+- when running MPI version from AsterStudy, uncheck "save databases" (yellow icon on the right of the job  activation line , starting with the green +). Failure to do so may let the solver run indefinetelly in the background even if calculation is finished. 
+If someone knows a fix, let me know ;-)
+- The image has been tested on linear static studies up to 1.5MDOFs using MPI PETSC + LDLT_SP and MUMPS solvers up to 20 CPUS. Solvers seem to work well. In case of doubt, run your study with the "stable" or "testing" version to check.
 
 
