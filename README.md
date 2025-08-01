@@ -1,9 +1,11 @@
 # SalomeMeca2024_Code-AsterMPI
 
-Build instruction of SalomeMeca2024 with Code-Aster Testing compiled with MPI PETSC &amp; MUMPS solvers
+Here is a set of build instruction of SalomeMeca2024 with Code-Aster Testing compiled with MPI PETSC &amp; MUMPS solvers
 
 Basicaly it is just a set of instructions to add Code-Aster Testing MPI solver into Salome-Meca 2024 Singularity / Apptainer image.
 It is based on the official Salome-Meca 2024.1 SIF image released by EDF here:  https://code-aster.org/spip.php?article295
+
+__To download a pre-made image . see the Release section here on the right >>__
 
 See my notes customBuildJC.txt for all details and troubleshooting steps I followed to get there...
 
