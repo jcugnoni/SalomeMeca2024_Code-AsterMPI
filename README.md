@@ -31,7 +31,7 @@ Short summary:
     singularity shell --writable SalomeMeca2024_custom
 
 4) follow guide here: https://gitlab.com/codeaster-opensource-documentation/opensource-installation-development/-/blob/main/devel/compile.md
-*in short: 
+- in short: 
 
     cd /opt/
     mkdir codeaster
@@ -39,35 +39,34 @@ Short summary:
     git clone https://gitlab.com/codeaster/src.git
     git clone https://gitlab.com/codeaster/devtools.git
 
-*build (all prerequisites already in container)
+- build (all prerequisites already in container)
 
     cd src
     ./waf configure
     ./waf install -j 8
     ./waf install test -n zzzz506c
 
-* check output of test result to make sure that job runned properly with MPI
+- check output of test result to make sure that job runned properly with MPI
 
 5) fixes to integrate the MPI version in Salome-Meca / AsterStudy and make it work:
 
-* add custom mpi version in the list of available install
+- add custom mpi version in the list of available install
 
     echo "vers : testing_mpi:/opt/codeaster/install/mpi/share/aster" >> /opt/salome_meca/V2024.1.0_scibian_univ/tools/Code_aster_frontend-202410/etc/codeaster/aster
 
-* fix for wrong as_run version for mpi testing version 
+- fix for wrong as_run version for mpi testing version 
 
     mv /usr/local/bin/as_run /usr/local/bin/as_run_23
     ln -s /usr/local/bin/as_run /opt/salome_meca/V2024.1.0_scibian_univ/tools/Code_aster_frontend-202410/bin/as_run
 
-* fix run_aster to run in MPI mode under SalomeMeca AsterStudy environment: after many debug steps, I found that the "OMPI_xxxx" variables set when running MPI job in AsterStudy are causing mpiexec to fail...
-* also the wrong version of as_run is used (2023 coming from SalomeMeca) and fails to identify the correct path to the testing_mpi Code-Aster install => need to prepend PATH with /usrl/local/bin to find the right as_run
+-  fix run_aster to run in MPI mode under SalomeMeca AsterStudy environment: after many debug steps, I found that the "OMPI_xxxx" variables set when running MPI job in AsterStudy are causing mpiexec to fail... also the wrong version of as_run is used (2023 coming from SalomeMeca) and fails to identify the correct path to the testing_mpi Code-Aster install => need to prepend PATH with /usrl/local/bin to find the right as_run
 
-PATCH: to fix this, we need to modify run_aster_main.py in /opt/codeaster/install/mpi/lib/aster/run_aster/run_aster_main.py
+MY QUICK & DIRTY PATCH: to fix this, we need to modify run_aster_main.py in /opt/codeaster/install/mpi/lib/aster/run_aster/run_aster_main.py
 at line ~476;  comment  "proc = run(cmd, shell=True, check=False)" and add the following lines
 cmdpfx ="lst=`env | grep OMPI_ | cut -d = -f 1`; for item in $lst; do echo 'unset ' $item; unset $item; done; export PATH=/usr/local/bin:$PATH; "
 proc = run(cmdpfx+cmd, shell=True, check=False, capture_output=False)
 
-* thanks to ChatGPT, here is a sed command to automate this change (complicated but works, make sure to copy - paste it as one block, newlines matter):
+- thanks to ChatGPT, here is a sed command to automate this change (complicated but works, make sure to copy - paste it as one block, newlines matter):
  
     cd /opt/codeaster/install/mpi/lib/aster/run_aster
     cp run_aster_main.py run_aster_main.orig
