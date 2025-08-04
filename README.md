@@ -59,6 +59,7 @@ cd src
 ./waf install -j 8
 ./waf install test -n zzzz506c
 ```
+Note that you may need to "export RDMAV_FORK_SAFE=1" before "./waf configure" as it was reported that compilation may fail in some cases without it.
 
 - check output of test result to make sure that job runned properly with MPI
 
@@ -74,7 +75,7 @@ echo "vers : testing_mpi:/opt/codeaster/install/mpi/share/aster" >> /opt/salome_
 
 ```
 mv /usr/local/bin/as_run /usr/local/bin/as_run_23
-ln -s /usr/local/bin/as_run /opt/salome_meca/V2024.1.0_scibian_univ/tools/Code_aster_frontend-202410/bin/as_run
+ln -s  /opt/salome_meca/V2024.1.0_scibian_univ/tools/Code_aster_frontend-202410/bin/as_run /usr/local/bin/as_run
 ```
 
 -  fix run_aster to run in MPI mode under SalomeMeca AsterStudy environment: after many debug steps, I found that the "OMPI_xxxx" variables set when running MPI job in AsterStudy are causing mpiexec to fail... also the wrong version of as_run is used (2023 coming from SalomeMeca) and fails to identify the correct path to the testing_mpi Code-Aster install => need to prepend PATH with /usrl/local/bin to find the right as_run
